@@ -1,62 +1,139 @@
 import attr
 from functools import reduce
-from typing import List, Dict
+from typing import List, Dict, Union, Tuple, Optional
 
 
 REQUIRED = True
 
 
-@attr.s(auto_attribs=True)
+def struct(*args, **kwargs):
+    """a struct definition decorator for Python 3 datatypes like syntax.
+
+    :return: the attrs.s
+    """
+    return attr.s(auto_attribs=True, *args, **kwargs)
+
+
 class _JStruct:
-    def __getitem__(self, arguments):
+    """A typing definition wrapper used to defined nested struct.
+
+        @struct
+        class Child:
+            child_prop1: int
+
+        @struct
+        class Parent:
+            parent_prop: str
+            child: Child = JStruct[Child]
+    """
+    def __getitem__(self, arguments: Union[type, Tuple[type, Optional[bool], Optional[dict]]]):
+        """Override the `[]` operator to offer a typing wrapper syntactic sugar.
+
+        :arguments is either a `type` or a `tuple`
+            - type: the nested struct type (or class)
+            - tuple: (type, REQUIRED, {dictionary of extra attr.ib arguments})
+
+        :return a property initializer from attrs (attr.ib)
+        """
+
         class_, required_, *kwargs = arguments if isinstance(arguments, tuple) else (arguments, False)
 
-        def build(args) -> class_:
+        def converter(args) -> class_:
             return class_(**args) if isinstance(args, dict) else args
         default_ = dict(default=attr.NOTHING if required_ else None)
         return attr.ib(
             **default_,
-            converter=build,
+            converter=converter,
             **dict(reduce(lambda r, d: r + list(d.items()), kwargs, []))
         )
 
 
-@attr.s(auto_attribs=True)
 class _JList:
-    def __getitem__(self, arguments):
+    """A typing definition wrapper used to defined nested collection (list) of struct.
+
+        @struct
+        class Child:
+            child_prop1: int
+
+        @struct
+        class Parent:
+            parent_prop: str
+            children: List[Child] = JList[Child]
+    """
+    def __getitem__(self, arguments: Union[type, Tuple[type, Optional[bool], Optional[dict]]]):
+        """Override the `[]` operator to offer a typing wrapper syntactic sugar.
+
+        :arguments is either a `type` or a `tuple`
+            - type: the nested struct type (or class)
+            - tuple: (type, REQUIRED, {dictionary of extra attr.ib arguments})
+
+        :return a property initializer from attrs (attr.ib)
+        """
+
         class_, required_, *kwargs = arguments if isinstance(arguments, tuple) else (arguments, False)
 
-        def build(args) -> List[class_]:
+        def converter(args) -> List[class_]:
             if isinstance(args, list):
                 items = args
             else:
                 items = [args]
+
             return [
                 (class_(**item) if isinstance(item, dict) else item)
                 for item in items
             ]
+
         default_ = dict(default=attr.NOTHING if required_ else [])
         return attr.ib(
             **default_,
-            converter=build,
+            converter=converter,
             **dict(reduce(lambda r, d: r + list(d.items()), kwargs, []))
         )
 
 
-@attr.s(auto_attribs=True)
 class _JDict:
-    def __getitem__(self, arguments):
-        key_type, value_type, required_, *kwargs = arguments if isinstance(arguments, tuple) else (arguments, False)
+    """A typing definition wrapper used to defined nested dictionary struct typing.
 
-        def build(args) -> Dict[key_type, value_type]:
+        from jstruct import struct
+        from jstruct.type import _JDict
+
+        JDict = _JDict()
+
+        @struct
+        class Child:
+            child_prop1: int
+
+        @struct
+        class Parent:
+            parent_prop: str
+            children: Dict[str, Child] = JDict[str, Child]
+    """
+    def __getitem__(self, arguments: Tuple[type, type, Optional[bool], Optional[dict]]):
+        """Override the `[]` operator to offer a typing wrapper syntactic sugar.
+
+        :arguments is a `tuple`
+            (key_type, value_type, REQUIRED, {dictionary of extra attr.ib arguments})
+
+        :return a property initializer from attrs (attr.ib)
+        """
+
+        key_type, value_type, required_, *kwargs = arguments + (False, ) if len(arguments) > 3 else arguments
+
+        def converter(args) -> Dict[key_type, value_type]:
             return {
                 key_type(key): (value_type(**value) if isinstance(value, dict) else value)
                 for (key, value) in args.items()
             }
+
         default_ = dict(default=attr.NOTHING if required_ else {})
-        return attr.ib(**default_, converter=build, **kwargs)
+        return attr.ib(**default_, converter=converter, **kwargs)
 
 
+# Instance of _JStruct
 JStruct = _JStruct()
+
+# Instance of _JList
 JList = _JList()
+
+# Instance of _JDict
 JDict = _JDict()
