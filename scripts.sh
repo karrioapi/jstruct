@@ -5,7 +5,9 @@ test() {
 }
 
 build() {
-    python setup.py sdist bdist_wheel
+    rm -r ./dist || true
+    python -m pip install --upgrade setuptools wheel twine
+    python setup.py bdist_wheel
 }
 
 init() {
@@ -15,4 +17,12 @@ init() {
     . ./venv/bin/activate &&
     pip install -r requirements.txt &&
     pip install -e .
+}
+
+release_test() {
+    python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+}
+
+release() {
+    python -m twine upload dist/*
 }
