@@ -2,6 +2,8 @@
 
 An eloquent and opinionated python library for nested object models definition offering simple serialization and deserialization into python dictionaries.
 
+[![Build Status](https://dev.azure.com/danielkobina0854/danielkobina/_apis/build/status/DanH91.jstruct?branchName=master)](https://dev.azure.com/danielkobina0854/danielkobina/_build/latest?definitionId=1&branchName=master) [![License: LGPL v3](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 ## Why?
 
 The deserialization of JSON or yaml into python data types is a common practice useful in many ways.
@@ -16,7 +18,7 @@ The deserialization of JSON or yaml into python data types is a common practice 
 
 ## What?
 
-The result is a simple simple and intuitive syntax familiar to a pythonista that brings `Validation`, `Deserialization` and `Serialization`.
+The result is a simple and intuitive syntax familiar to a pythonista that brings `Validation`, `Deserialization` and `Serialization`.
 
 ## Requirements
 
@@ -66,6 +68,10 @@ print(attr.asdict(role_models))
 ## Authors
 
 - **Daniel K.** - [@DanHK91](https://twitter.com/DanHK91) | [https://danielk.xyz](https://danielk.xyz/) 
+
+## Contribute
+
+Contributors are welcomed.
 
 ## License
 
