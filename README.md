@@ -2,27 +2,30 @@
 
 An eloquent and opinionated python library for nested object models definition offering simple serialization and deserialization into python dictionaries.
 
-[![Build Status](https://dev.azure.com/danielkobina0854/danielkobina/_apis/build/status/DanH91.jstruct?branchName=master)](https://dev.azure.com/danielkobina0854/danielkobina/_build/latest?definitionId=1&branchName=master) [![License: LGPL v3](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://dev.azure.com/danielkobina0854/danielkobina/_apis/build/status/DanH91.jstruct?branchName=master)](https://dev.azure.com/danielkobina0854/danielkobina/_build/latest?definitionId=1&branchName=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cbe02771e00e42cd882ab48543782b40)](https://www.codacy.com/app/DanH91/jstruct?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DanH91/jstruct&amp;utm_campaign=Badge_Grade) 	
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-## Why?
+## Why
 
 The deserialization of JSON or yaml into python data types is a common practice useful in many ways.
-- Configuration file reading and writing
-- REST API message response generation and request processing
-- Object-Document Mapping for a document store
-- Data import parsing or export generation 
+  - Configuration file reading and writing
+  - REST API message response generation and request processing
+  - Object-Document Mapping for a document store
+  - Data import parsing or export generation 
 
-## How?
+## How
 
 `JStruct` leverage [attrs](https://www.attrs.org/en/stable/) the great `Classes without boilerplate` library to define structs without boilerplate.
 
-## What?
+## What
 
 The result is a simple and intuitive syntax familiar to a pythonista that brings `Validation`, `Deserialization` and `Serialization`.
 
 ## Requirements
 
- - Python 3.5 and +
+  - Python 3.6 and +
 
 ## Installation
 
