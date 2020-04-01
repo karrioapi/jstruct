@@ -2,7 +2,7 @@
 
 An eloquent and opinionated python library for nested object models definition offering simple serialization and deserialization into python dictionaries.
 
-[![Build Status](https://dev.azure.com/danielkobina0854/danielkobina/_apis/build/status/DanH91.jstruct?branchName=master)](https://dev.azure.com/danielkobina0854/danielkobina/_build/latest?definitionId=1&branchName=master)
+[![JStruct](https://github.com/PurplShip/jstruct/workflows/JStruct/badge.svg)](https://github.com/PurplShip/jstruct)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/cbe02771e00e42cd882ab48543782b40)](https://www.codacy.com/app/DanH91/jstruct?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DanH91/jstruct&amp;utm_campaign=Badge_Grade) 	
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
