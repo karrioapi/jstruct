@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
       name='jstruct',
-      version='2019.5.1',
+      version='2020.4.0',
       description='Readable serializable and deserializable Python nested models',
       long_description=long_description,
       long_description_content_type="text/markdown",
@@ -16,7 +16,7 @@ setup(
       license='MIT',
       packages=['jstruct'],
       install_requires=[
-            'attrs==18.2.0'
+            'attrs'
       ],
       zip_safe=False,
       classifiers=[
