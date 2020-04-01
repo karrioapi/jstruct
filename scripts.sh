@@ -45,8 +45,8 @@ test() {
 
 build() {
     clean_builds || true
-    python -m pip install --upgrade setuptools wheel twine
-    python setup.py bdist_wheel
+    python setup.py bdist_wheel &&
+    backup_wheels
 }
 
 release_test() {
@@ -61,4 +61,10 @@ clean_builds() {
     find . -type d -name dist -exec rm -r {} \; || true
     find . -type d -name build -exec rm -r {} \; || true
     find . -type d -name "*.egg-info" -exec rm -r {} \; || true
+}
+
+backup_wheels() {
+    [ -d "$WHEEL_STORE" ] &&
+    find . -name \*.whl -exec mv {} "$WHEEL_STORE" \; &&
+    clean_builds
 }
