@@ -1,2 +1,1 @@
-pytest==4.5.0
-black==19.3b0
+attrs==19.3.0
