@@ -1,5 +1,6 @@
 black
 pytest
 twine
+wheel
 
--e .[dev]
+-e .

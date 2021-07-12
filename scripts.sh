@@ -5,7 +5,7 @@
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 BASE_DIR="${PWD##*/}"
 ENV_DIR=".venv"
-DIST="${ROOT:?}/.dist"
+DIST="${ROOT:?}/dist"
 
 activate_env() {
   echo "Activate $BASE_DIR"
@@ -41,12 +41,17 @@ test() {
     pytest test/
 }
 
+backup() {
+    echo "Backup wheels..."
+    [[ -d "$wheels" ]] &&
+    find "${DIST}" -not -path "*$ENV_DIR/*" -name \*.whl -prune -exec cp '{}' "$wheels" \; &&
+    clean
+}
+
 build() {
     clean
-	rm -rf "${DIST}"
-	mkdir -p "${DIST}"
     python setup.py bdist_wheel &&
-    backup_wheels
+    backup
 }
 
 release() {
@@ -59,13 +64,6 @@ clean() {
     find . -type d -not -path "*$ENV_DIR/*" -name dist -prune -exec rm -r '{}' \; || true
     find . -type d -not -path "*$ENV_DIR/*" -name build -prune -exec rm -r '{}' \; || true
     find . -type d -not -path "*$ENV_DIR/*" -name "*.egg-info" -prune -exec rm -r '{}' \; || true
-}
-
-backup() {
-    echo "Listing submodules..."
-    [[ -d "$wheels" ]] &&
-    find "${DIST}" -not -path "*$ENV_DIR/*" -name \*.whl -prune -exec cp '{}' "$wheels" \; &&
-    clean
 }
 
 activate_env || true
