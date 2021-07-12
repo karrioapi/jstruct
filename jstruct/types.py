@@ -1,13 +1,15 @@
 import attr
 import logging
-from functools import reduce, partial
-from typing import List, Dict, Union, Tuple, Optional, Type
+from functools import reduce
+from typing import List, Dict, Union, Tuple, Optional
 
 import jstruct.utils as utils
 
 logger = logging.getLogger(__name__)
-struct: Type[attr.s] = partial(attr.s, auto_attribs=True)
 REQUIRED = True
+
+
+struct = attr.s(auto_attribs=True)
 
 
 class _JStruct:
