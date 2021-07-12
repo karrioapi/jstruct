@@ -95,20 +95,6 @@ class TestClass(object):
         with pytest.raises(TypeError):
             RoleModels(**payload)
 
-    def test_nested_models_argument_validation(self):
-        payload = {
-            "scientists": [
-                {
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "fake_attribute": "This is a FAKE attribute"
-                }
-            ]
-        }
-
-        with pytest.raises(TypeError):
-            RoleModels(**payload)
-
 
 """
     Test Models

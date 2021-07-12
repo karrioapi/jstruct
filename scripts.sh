@@ -5,10 +5,11 @@
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 BASE_DIR="${PWD##*/}"
 ENV_DIR=".venv"
+DIST="${ROOT:?}/.dist"
 
 activate_env() {
   echo "Activate $BASE_DIR"
-  deactivate || true
+  deactivate >/dev/null 2>&1
   # shellcheck source=src/script.sh
   source "${ROOT:?}/$ENV_DIR/$BASE_DIR/bin/activate"
 }
@@ -25,9 +26,7 @@ create_env() {
 
 init() {
     create_env &&
-    pip install -r requirements.txt &&
-    pip install -r requirements.dev.txt &&
-    pip install -e .
+    pip install -r requirements.dev.txt
 }
 
 
@@ -39,32 +38,34 @@ alias env:reset=init
 # Project helpers
 
 test() {
-    pip install -e .
     pytest test/
 }
 
 build() {
-    clean_builds || true
+    clean
+	rm -rf "${DIST}"
+	mkdir -p "${DIST}"
     python setup.py bdist_wheel &&
     backup_wheels
 }
 
-release_test() {
-    python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
-}
-
 release() {
-    python -m twine upload dist/*
+    pip install twine > /dev/null &&
+	twine upload "${DIST}/*"
 }
 
-clean_builds() {
-    find . -type d -name dist -exec rm -r {} \; || true
-    find . -type d -name build -exec rm -r {} \; || true
-    find . -type d -name "*.egg-info" -exec rm -r {} \; || true
+clean() {
+    echo "cleaning build files..."
+    find . -type d -not -path "*$ENV_DIR/*" -name dist -prune -exec rm -r '{}' \; || true
+    find . -type d -not -path "*$ENV_DIR/*" -name build -prune -exec rm -r '{}' \; || true
+    find . -type d -not -path "*$ENV_DIR/*" -name "*.egg-info" -prune -exec rm -r '{}' \; || true
 }
 
-backup_wheels() {
-    [ -d "$WHEEL_STORE" ] &&
-    find . -name \*.whl -exec mv {} "$WHEEL_STORE" \; &&
-    clean_builds
+backup() {
+    echo "Listing submodules..."
+    [[ -d "$wheels" ]] &&
+    find "${DIST}" -not -path "*$ENV_DIR/*" -name \*.whl -prune -exec cp '{}' "$wheels" \; &&
+    clean
 }
+
+activate_env || true
