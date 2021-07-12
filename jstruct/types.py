@@ -1,17 +1,15 @@
 import attr
+import logging
 from functools import reduce
 from typing import List, Dict, Union, Tuple, Optional
 
+import jstruct.utils as utils
 
+logger = logging.getLogger(__name__)
 REQUIRED = True
 
 
-def struct(*args, **kwargs):
-    """a struct definition decorator for Python 3 datatypes like syntax.
-
-    :return the attrs.s funtion types
-    """
-    return attr.s(auto_attribs=True, *args, **kwargs)
+struct = attr.s(auto_attribs=True)
 
 
 class _JStruct:
@@ -44,7 +42,7 @@ class _JStruct:
         )
 
         def converter(args) -> class_:
-            return class_(**args) if isinstance(args, dict) else args
+            return utils.instantiate(class_, args) if isinstance(args, dict) else args
 
         default_ = dict(default=attr.NOTHING if required_ else None)
         return attr.ib(
@@ -90,7 +88,7 @@ class _JList:
                 items = [args]
 
             return [
-                (class_(**item) if isinstance(item, dict) else item) for item in items
+                (utils.instantiate(class_, item) if isinstance(item, dict) else item) for item in items
             ]
 
         default_ = dict(default=attr.NOTHING if required_ else [])
@@ -136,7 +134,8 @@ class _JDict:
         def converter(args) -> Dict[key_type, value_type]:
             return {
                 key_type(key): (
-                    value_type(**value) if isinstance(value, dict) else value
+                    utils.instantiate(value_type, value)
+                    if isinstance(value, dict) else value
                 )
                 for (key, value) in args.items()
             }

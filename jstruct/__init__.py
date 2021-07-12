@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""Import core names of jstruct.
+"""Import core utilities of jstruct.
 
 from jstruct import struct, JStruct, JList, JDict
 """

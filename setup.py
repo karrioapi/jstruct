@@ -6,12 +6,12 @@ with open("README.md", "r") as fh:
 
 setup(
       name='jstruct',
-      version='2020.4.0',
+      version='2021.7',
       description='Readable serializable and deserializable Python nested models',
       long_description=long_description,
       long_description_content_type="text/markdown",
-      url='https://github.com/DanH91/jstruct',
-      author='DanH91',
+      url='https://github.com/purplship/jstruct',
+      author='DanielK',
       author_email='danielk.developer@gmail.com',
       license='MIT',
       packages=['jstruct'],
