@@ -2,7 +2,7 @@
 
 An eloquent and opinionated python library for nested object models definition offering simple serialization and deserialization into python dictionaries.
 
-[![JStruct](https://github.com/PurplShip/jstruct/workflows/JStruct/badge.svg)](https://github.com/PurplShip/jstruct)
+[![JStruct](https://github.com/purplship/jstruct/workflows/JStruct/badge.svg)](https://github.com/purplship/jstruct)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1bd788b68a46467f9c914a62a876059a)](https://www.codacy.com/gh/purplship/jstruct/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=purplship/jstruct&amp;utm_campaign=Badge_Grade)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)

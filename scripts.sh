@@ -45,7 +45,6 @@ backup() {
     echo "Backup wheels..."
     [[ -d "$wheels" ]] &&
     find "${DIST}" -not -path "*$ENV_DIR/*" -name \*.whl -prune -exec cp '{}' "$wheels" \; &&
-    clean
 }
 
 build() {
