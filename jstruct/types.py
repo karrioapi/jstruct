@@ -45,11 +45,11 @@ class _JStruct:
             return utils.instantiate(class_, args) if isinstance(args, dict) else args
 
         default_ = dict(default=attr.NOTHING if required_ else None)
-        return attr.ib(
+        return attr.ib(**{
             **default_,
-            converter=converter,
+            "converter": converter,
             **dict(reduce(lambda r, d: r + list(d.items()), kwargs, []))
-        )
+        })
 
 
 class _JList:
@@ -93,11 +93,11 @@ class _JList:
 
         default_ = dict(default=attr.NOTHING if required_ else [])
 
-        return attr.ib(
+        return attr.ib(**{
             **default_,
-            converter=converter,
+            "converter": converter,
             **dict(reduce(lambda r, d: r + list(d.items()), kwargs, []))
-        )
+        })
 
 
 class _JDict:
@@ -141,11 +141,11 @@ class _JDict:
             }
 
         default_ = dict(default=attr.NOTHING if required_ else {})
-        return attr.ib(
+        return attr.ib(**{
             **default_,
-            converter=converter,
+            "converter": converter,
             **dict(reduce(lambda r, d: r + list(d.items()), kwargs, []))
-        )
+        })
 
 
 # Instance of _JStruct
